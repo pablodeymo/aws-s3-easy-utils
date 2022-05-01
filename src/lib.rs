@@ -25,3 +25,38 @@ pub async fn list_elements(bucket: &Bucket, prefix: &str) -> Result<Vec<Object>,
     }
     Ok(ret)
 }
+
+pub struct AwsS3Info {
+    pub aws_access_key: String,
+    pub aws_secret_key: String,
+    pub aws_s3_region: String,
+    pub aws_s3_endpoint: String,
+    pub aws_s3_bucket: String,
+}
+
+impl AwsS3Info {
+    pub fn try_from_env() -> Result<Self, anyhow::Error> {
+        let aws_access_key = std::env::var("AWS_ACCESS_KEY")?;
+        let aws_secret_key = std::env::var("AWS_SECRET_KEY")?;
+        let aws_s3_region = std::env::var("AWS_S3_REGION")?;
+        let aws_s3_endpoint = std::env::var("AWS_S3_ENDPOINT")?;
+        let aws_s3_bucket = std::env::var("AWS_S3_BUCKET")?;
+        Ok(AwsS3Info {
+            aws_access_key,
+            aws_secret_key,
+            aws_s3_region,
+            aws_s3_endpoint,
+            aws_s3_bucket,
+        })
+    }
+
+    pub fn get_s3_bucket(&self) -> Result<Bucket, anyhow::Error> {
+        get_s3_bucket(
+            &self.aws_access_key,
+            &self.aws_secret_key,
+            &self.aws_s3_region,
+            &self.aws_s3_endpoint,
+            &self.aws_s3_bucket,
+        )
+    }
+}
