@@ -1,10 +1,10 @@
 [package]
 name = "aws-s3-easy-utils"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rust-s3 = {version = "0.28", features = ["tokio-rustls-tls", "no-verify-ssl"], default-features = false }
+rust-s3 = {version = "0.31", features = ["tokio-rustls-tls", "no-verify-ssl"], default-features = false }
 anyhow = "1.0.40"
